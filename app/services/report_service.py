@@ -40,7 +40,7 @@ def validate_details(code:str,details:dict,content:str|None=None)->dict:
         if not experiment_date:
             raise DomainError('message')
         # 여기서 experiment_date가 올바른 날짜인지 검증/변환 후 cleaned에 담기
-        cleaned["experiment_date"] = experiment_date
+        cleaned["experiment_date"] = experiment_date 
 
     elif code == "DAILY_WORK":
         work_date = str(details.get("work_date","")).strip()
