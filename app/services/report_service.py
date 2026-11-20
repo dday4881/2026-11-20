@@ -32,6 +32,38 @@ def validate_details(code:str,details:dict,content:str|None=None)->dict:
     # 입력·반환형과 예외·상태코드는 요구사항 명세서/API 계약을 참조합니다.
     # 정답 구현 후 아래 예외를 지우고 로직을 작성하세요.
     #raise NotImplementedError("B-05 · validate_details() TODO 미완성")
+    if not isinstance(details, dict):
+        raise DomainError('message')
+    cleaned = {}
+    if code == "EXPERIMENT":
+        experiment_date = str(details.get("experiment_date", "")).strip()
+        if not experiment_date:
+            raise DomainError('message')
+        # 여기서 experiment_date가 올바른 날짜인지 검증/변환 후 cleaned에 담기
+        cleaned["experiment_date"] = experiment_date
+
+    elif code == "DAILY_WORK":
+        work_date = str(details.get("work_date","")).strip()
+
+    elif code == "RESEARCH_PLAN":
+        research_goal = str(details.get("research_goal","")).strip()
+
+    elif code == "DATA_PROCESSING":
+        dataset_name = str(details.get("dataset_name", "")).strip()
+
+    elif code == "MEETING":
+        meeting_at = str(details.get("meeting_at", "")).strip()
+
+    elif code == "PROMPT":
+        prompt_text = str(details.get("prompt_text", "")).strip()
+        if not prompt_text or (content or "").strip() != prompt_text:
+            raise DomainError('message')
+        cleaned["prompt_text"] = prompt_text
+
+    else:
+        raise DomainError('message')
+
+    return cleaned
 
 
 def encode_overview(overview:str)->list[float]:
