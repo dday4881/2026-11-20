@@ -50,7 +50,18 @@ def categories(db:Session)->dict:
     # 입력·반환형과 예외·상태코드는 요구사항 명세서/API 계약을 참조합니다.
     # 정답 구현 후 아래 예외를 지우고 로직을 작성하세요.
     #raise NotImplementedError("B-04 · categories() TODO 미완성")
-    categories('mentor')
+    rows = db.query(ReportCategory).order_by(ReportCategory.category_id.asc()).all()
+    return {
+        'items': [
+            {
+                'category_id': r.category_id,
+                'code': r.code,
+                'name': r.name,
+                'description': r.description,
+            }
+            for r in rows
+        ]
+    }
 
 
 def create_report(db:Session,data:ReportCreate)->dict:
